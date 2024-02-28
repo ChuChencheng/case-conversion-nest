@@ -724,6 +724,18 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
+"@types/lodash.snakecase@^4.1.9":
+  version "4.1.9"
+  resolved "https://registry.yarnpkg.com/@types/lodash.snakecase/-/lodash.snakecase-4.1.9.tgz#2d2b3313a44500cb6d8a1c598e0353778d4420d2"
+  integrity sha512-emBZJUiNlo+QPXr1junMKXwzHJK9zbFvTVdyAoorFcm1YRsbzkZCYPTVMM9AW+dlnA6utG7vpfvOs8alxv/TMw==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.14.202"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.202.tgz#f09dbd2fb082d507178b2f2a5c7e74bd72ff98f8"
+  integrity sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==
+
 "@types/node@*":
   version "20.11.21"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.21.tgz#ad67e65652f7be15686e2df87a38076a81c5e9c5"
@@ -2225,6 +2237,11 @@ lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
+
+lodash.snakecase@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.snakecase/-/lodash.snakecase-4.1.1.tgz#39d714a35357147837aefd64b5dcbb16becd8f8d"
+  integrity sha512-QZ1d4xoBHYUeuouhEq3lk3Uq7ldgyFXGBhg04+oRLnIz8o9T65Eh+8YdroUwn846zchkA9yDsDl5CVVaV2nqYw==
 
 lru-cache@^5.1.1:
   version "5.1.1"

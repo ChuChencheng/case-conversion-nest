@@ -1,4 +1,5 @@
-import * as ts from 'typescript'
+import ts from 'typescript'
+
 import { mergePluginOptions } from './utils/options'
 import { isFilenameMatched } from './utils/filename'
 import { IReceivedPluginOptions } from './interfaces/plugin-options.interface'
