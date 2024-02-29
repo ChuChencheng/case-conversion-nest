@@ -1,9 +1,13 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { Observable, map } from 'rxjs'
-import { plainToInstance } from 'class-transformer'
+import { classToPlain, instanceToPlain, plainToClass, plainToInstance } from 'class-transformer'
 
 import { CaseConversionResponse } from '../decorators/response-dto.decorator'
+
+// class-transformer compatibility
+const fromPlainToInstance = plainToClass || plainToInstance
+const fromInstanceToPlain = classToPlain || instanceToPlain
 
 @Injectable()
 export class CaseConversionInterceptor implements NestInterceptor {
@@ -19,7 +23,10 @@ export class CaseConversionInterceptor implements NestInterceptor {
 
     return next.handle().pipe(
       map((value) => {
-        const transformedValue = plainToInstance(responseDTOClass, value)
+        if (typeof responseDTOClass !== 'function') return value
+        const transformedValue = fromInstanceToPlain(
+          fromPlainToInstance(responseDTOClass, value, { ignoreDecorators: true }),
+        )
         return transformedValue
       }),
     )
