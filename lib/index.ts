@@ -1,2 +1,2 @@
-export * from './decorators/response-dto.decorator'
+export * from './decorators/case-conversion-response.decorator'
 export * from './interceptors/case-conversion.interceptor'

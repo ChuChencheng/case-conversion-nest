@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core'
 import { Observable, map } from 'rxjs'
 import { classToPlain, instanceToPlain, plainToClass, plainToInstance } from 'class-transformer'
 
-import { CaseConversionResponse } from '../decorators/response-dto.decorator'
+import { CaseConversionResponse } from '../decorators/case-conversion-response.decorator'
 
 // class-transformer compatibility
 const fromPlainToInstance = plainToClass || plainToInstance
