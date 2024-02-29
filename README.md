@@ -60,3 +60,55 @@ export class CatsController {
   }
 }
 ```
+
+# Caveats
+
+1. All of your DTO classes must be inside the files you specify in `dtoFileNameSuffix` (Defaults to `dto.ts`, `entity.ts`)
+
+```typescript
+// create-cat.dto.ts
+export class CreateCatDTO {
+  catName: string
+
+  nestedObject: OtherDTO
+}
+
+// other.ts
+export class OtherDTO {
+  /**
+   * This field will not be converted as the class is not inside a dto.ts file
+   * 
+   * In addition, this field will not be displayed in Swagger UI
+  */
+  otherField: string
+}
+```
+
+2. Nested object must be annotated with `Type` decorator, or else nested object will not be converted
+
+```typescript
+import { Type } from 'class-transformer'
+
+export class CreateCatDTO {
+  catName: string
+
+  @Type(() => A)
+  converted: A
+
+  notConverted: B
+}
+
+class A {
+  /**
+   * Converted
+  */
+  aName: string
+}
+
+class B {
+  /**
+   * This field will not be converted
+  */
+  bName: string
+}
+```
