@@ -1,8 +1,8 @@
-import * as ts from 'typescript'
+import ts from 'typescript'
 
 import { before } from '../../lib/plugin'
 
-import { createCatDTOText } from './dto/create-cat.dto'
+import { createCatDTOText, createCatDTOTextTranspiled } from './dto/create-cat.dto'
 
 describe('DTO properties', () => {
   it('add decorators to every DTO class', () => {
@@ -25,6 +25,6 @@ describe('DTO properties', () => {
       },
     })
 
-    console.log(result.outputText)
+    expect(result.outputText).toEqual(createCatDTOTextTranspiled)
   })
 })

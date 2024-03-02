@@ -4,6 +4,35 @@ Tool & CLI Plugin for Nest.js DTO case conversion.
 
 This lib helps you to use snake_case in DTO and camelCase in code.
 
+Request body:
+
+```json
+{
+  "cat_name": "xxx"
+}
+```
+
+DTO definition:
+
+```typescript
+export class CatRequestDTO {
+  @IsString()
+  catName: string
+}
+
+export class CatResponseDTO {
+  catId: string
+}
+```
+
+Response:
+
+```json
+{
+  "cat_id": "xxx"
+}
+```
+
 # Usage
 
 1. Set up the global `CaseConversionInterceptor` in `AppModule`

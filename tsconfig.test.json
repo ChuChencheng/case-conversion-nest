@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "es6",
+    "outDir": "./test/e2e/dist",
+    "allowJs": true
+  },
+  "include": [
+    "test/e2e/src/**/*"
+  ],
+  "exclude": ["node_modules"]
+}

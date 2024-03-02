@@ -23,7 +23,14 @@ export class CaseConversionInterceptor implements NestInterceptor {
 
     return next.handle().pipe(
       map((value) => {
-        if (typeof responseDTOClass !== 'function') return value
+        if (typeof responseDTOClass !== 'function') {
+          if (process.env.NODE_ENV !== 'production') {
+            console.warn(
+              '[CaseConversionNest] Response case not converted, did you forget to use @CaseConversionResponse on controller handlers?',
+            )
+          }
+          return value
+        }
         const transformedValue = fromInstanceToPlain(
           fromPlainToInstance(responseDTOClass, value, { ignoreDecorators: true }),
         )

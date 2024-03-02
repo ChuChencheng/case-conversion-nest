@@ -5,8 +5,10 @@ import { getDecoratorByName } from '../utils/decorators'
 import {
   API_HIDE_PROPERTY_DECORATOR_NAME,
   API_PROPERTY_DECORATOR_NAME,
+  CLASS_TRANSFORMER_IDENTIFIER_NAME,
   CLASS_TRANSFORMER_PACKAGE_NAME,
   EXPOSE_DECORATOR_NAME,
+  NESTJS_SWAGGER_IDENTIFIER_NAME,
   NESTJS_SWAGGER_PACKAGE_NAME,
 } from '../constants'
 
@@ -16,14 +18,16 @@ export class ModelClassVisitor {
 
     let updatedSourceFile = sourceFile
     updatedSourceFile = this.addImport(
+      program,
       updatedSourceFile,
       CLASS_TRANSFORMER_PACKAGE_NAME,
-      EXPOSE_DECORATOR_NAME,
+      CLASS_TRANSFORMER_IDENTIFIER_NAME,
     )
     updatedSourceFile = this.addImport(
+      program,
       updatedSourceFile,
       NESTJS_SWAGGER_PACKAGE_NAME,
-      API_PROPERTY_DECORATOR_NAME,
+      NESTJS_SWAGGER_IDENTIFIER_NAME,
     )
 
     const visitClassProperty = (node: ts.Node): ts.Node => {
@@ -43,7 +47,7 @@ export class ModelClassVisitor {
           // Append Expose to decorators
           propertyDeclaration = this.appendDecoratorToPropertyDeclaration(
             propertyDeclaration,
-            EXPOSE_DECORATOR_NAME,
+            `${CLASS_TRANSFORMER_IDENTIFIER_NAME}.${EXPOSE_DECORATOR_NAME}`,
             fieldName,
             snakeCaseFieldName,
           )
@@ -56,7 +60,7 @@ export class ModelClassVisitor {
             // If no hide property decorator, append ApiProperty to decorators
             propertyDeclaration = this.appendDecoratorToPropertyDeclaration(
               propertyDeclaration,
-              API_PROPERTY_DECORATOR_NAME,
+              `${NESTJS_SWAGGER_IDENTIFIER_NAME}.${API_PROPERTY_DECORATOR_NAME}`,
               fieldName,
               snakeCaseFieldName,
             )
@@ -84,25 +88,44 @@ export class ModelClassVisitor {
    * @param namedExport Named export, like 'Expose'
    * @returns Updated sourceFile
    */
-  addImport(sourceFile: ts.SourceFile, packageName: string, namedExport: string): ts.SourceFile {
-    const importDeclaration = ts.factory.createImportDeclaration(
-      undefined,
-      ts.factory.createImportClause(
-        false,
-        undefined,
-        ts.factory.createNamedImports([
-          ts.factory.createImportSpecifier(
-            false,
-            undefined,
-            ts.factory.createIdentifier(namedExport),
-          ),
-        ]),
-      ),
-      ts.factory.createStringLiteral(packageName),
-      undefined,
-    )
+  addImport(
+    program: ts.Program,
+    sourceFile: ts.SourceFile,
+    packageName: string,
+    identifierName: string,
+  ): ts.SourceFile {
+    const compilerOptions = program.getCompilerOptions()
 
-    return ts.factory.updateSourceFile(sourceFile, [importDeclaration, ...sourceFile.statements])
+    if (
+      compilerOptions.module &&
+      compilerOptions.module >= ts.ModuleKind.ES2015 &&
+      compilerOptions.module <= ts.ModuleKind.ESNext
+    ) {
+      const importDeclaration = ts.factory.createImportDeclaration(
+        undefined,
+        ts.factory.createImportClause(
+          false,
+          undefined,
+          ts.factory.createNamespaceImport(ts.factory.createIdentifier(identifierName)),
+        ),
+        ts.factory.createStringLiteral(packageName),
+        undefined,
+      )
+
+      return ts.factory.updateSourceFile(sourceFile, [importDeclaration, ...sourceFile.statements])
+    } else {
+      const importEqualsDeclaration = ts.factory.createImportEqualsDeclaration(
+        undefined,
+        false,
+        ts.factory.createIdentifier(identifierName),
+        ts.factory.createExternalModuleReference(ts.factory.createStringLiteral(packageName)),
+      )
+
+      return ts.factory.updateSourceFile(sourceFile, [
+        importEqualsDeclaration,
+        ...sourceFile.statements,
+      ])
+    }
   }
 
   /**
