@@ -53,7 +53,13 @@ import { CaseConversionInterceptor } from 'case-conversion-nest'
 export class AppModule {}
 ```
 
-2. Use `CaseConversionResponse` in route handlers to indicate response DTO class
+2. Use `ValidationPipe` globally with `transform` option set to `true`
+
+```typescript
+app.useGlobalPipes(new ValidationPipe({ transform: true }))
+```
+
+3. Use `CaseConversionResponse` in route handlers to indicate response DTO class
 
 ```typescript
 import { Controller, Get } from '@nestjs/common'
@@ -70,7 +76,7 @@ export class CatsController {
 }
 ```
 
-3. Use CLI plugin in `nest-cli.json`
+4. Use CLI plugin in `nest-cli.json`
 
 ```json
 {
@@ -141,3 +147,23 @@ class B {
   bName: string
 }
 ```
+
+# How it works
+
+## When is the case conversion done
+
+The DTO case conversion is done by `class-transformer`. When a request comes in, the query/payload will be transformed by `ValidationPipe`. Based on that, by adding `@Expose({ name: 'snake_case_field' })` to DTO fields, the conversion will be done automatically.
+
+In terms of response body, Nest.js does not have a similar "`ValidationPipe`" to transform it, so `CaseConversionInterceptor` is provided to handle it. The decorator `CaseConversionResponse` is also needed to indicate the response body type, because the type is not available in the interceptor internally.
+
+## Why do I need to use the cli plugin
+
+The conversion is done by adding `@Expose` decorator, but it's tedious to add it to every fields manually, so the cli plugin is provided to do this work automatically.
+
+**Note that extra `@Expose` added manually will not be effective.**
+
+## How is the fields in Swagger document converted
+
+It's also done by the cli plugin, by adding `@ApiProperty({ name: 'snake_case_field' })` to the field.
+
+It's OK to add extra `@ApiProperty` because the metadata is merged by `@nestjs/swagger`.

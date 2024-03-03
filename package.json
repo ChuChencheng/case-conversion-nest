@@ -2,14 +2,20 @@
   "name": "case-conversion-nest",
   "version": "1.0.0",
   "description": "Case conversion for nest DTO definitions",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "build:e2e": "rimraf test/e2e/dist && nest build -p tsconfig.test.json -c nest-cli.test.json",
-    "test": "yarn build && yarn build:e2e && jest"
+    "test": "yarn build && yarn build:e2e && jest",
+    "prepublishOnly": "yarn build"
   },
   "author": "ChuChencheng",
   "license": "MIT",
+  "files": [
+    "dist",
+    "plugin.js",
+    "plugin.ts"
+  ],
   "devDependencies": {
     "@nestjs/cli": "^10.3.2",
     "@nestjs/common": "^10.3.3",
