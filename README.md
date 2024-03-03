@@ -1,5 +1,7 @@
 # Case Conversion Nest
 
+[![Node.js Package](https://github.com/ChuChencheng/case-conversion-nest/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/ChuChencheng/case-conversion-nest/actions/workflows/npm-publish.yml)
+
 Tool & CLI Plugin for Nest.js DTO case conversion.
 
 This lib helps you to use snake_case in DTO and camelCase in code.
