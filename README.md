@@ -35,6 +35,16 @@ Response:
 }
 ```
 
+# Install
+
+```bash
+yarn add case-conversion-nest
+
+# or
+
+npm install case-conversion-nest
+```
+
 # Usage
 
 1. Set up the global `CaseConversionInterceptor` in `AppModule`

@@ -16,6 +16,14 @@
     "plugin.js",
     "plugin.ts"
   ],
+  "repository": {
+    "url": "https://github.com/ChuChencheng/case-conversion-nest"
+  },
+  "keywords": [
+    "case",
+    "case conversion",
+    "nestjs"
+  ],
   "devDependencies": {
     "@nestjs/cli": "^10.3.2",
     "@nestjs/common": "^10.3.3",

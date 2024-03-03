@@ -4,10 +4,14 @@
     "json",
     "ts"
   ],
-  "rootDir": "test",
   "testEnvironment": "node",
   "testRegex": ".(e2e-)?spec.ts$",
   "verbose": true,
+  "collectCoverage": true,
+  "coverageDirectory": "coverage",
+  "collectCoverageFrom": [
+    "lib/**/*.ts"
+  ],
   "transform": {
     "^.+\\.(t|j)s$": [
       "ts-jest",
