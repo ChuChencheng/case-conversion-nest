@@ -2,7 +2,7 @@ import request from 'supertest'
 import { INestApplication } from '@nestjs/common'
 
 import { getApp } from './dist/test/e2e/src/main'
-import { catList, newCat } from './src/mock'
+import { catList, newCat } from './dist/test/e2e/src/mock'
 import { caseConverter } from './utils/converter'
 
 const convertedCatList = caseConverter(catList)
