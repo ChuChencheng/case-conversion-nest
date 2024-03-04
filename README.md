@@ -47,7 +47,7 @@ npm install case-conversion-nest
 
 # Usage
 
-1. Set up the global `CaseConversionInterceptor` in `AppModule`
+1. Set up the global interceptor `CaseConversionInterceptor` in `AppModule`
 
 ```typescript
 import { Module } from '@nestjs/common'
